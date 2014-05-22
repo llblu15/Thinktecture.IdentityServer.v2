@@ -44,8 +44,10 @@ namespace MsftJwtIdentityModelExtensions
 
         public async Task<string> SamlToJwtAsync(SecurityToken token, string realm)
         {
-            var samlToken = token as SamlSecurityToken;
-            if (samlToken == null) throw new ArgumentException("token not an instance of a SamlSecurityToken");
+            SecurityToken samlToken = (SecurityToken)(token as SamlSecurityToken) ?? (SecurityToken) (token as Saml2SecurityToken);
+            
+            if (samlToken == null) 
+                throw new ArgumentException("token not an instance of a SamlSecurityToken");
 
             return await SamlToJwtAsync(samlToken.ToTokenXmlString(), realm);
         }

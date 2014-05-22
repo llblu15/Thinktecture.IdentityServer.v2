@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Http;
@@ -46,5 +47,16 @@ namespace WebRP
             //PassiveModuleConfiguration.SuppressLoginRedirectsForApiCalls();
             //PassiveModuleConfiguration.SuppressSecurityTokenExceptions();
         }
+
+//        protected void Application_Error(object sender, EventArgs e)
+//        {
+//            var error = Server.GetLastError();
+//            var cryptoEx = error as CryptographicException;
+//            if (cryptoEx != null)
+//            {
+//                FederatedAuthentication.WSFederationAuthenticationModule.SignOut();
+//                Server.ClearError();
+//            }
+//        }
     }
 }

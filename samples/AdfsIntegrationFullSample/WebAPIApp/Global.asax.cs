@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Services;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
@@ -15,6 +17,16 @@ namespace WebAPIApp
         protected void Application_Start()
         {
             WebApiConfig.Register(GlobalConfiguration.Configuration);
+        }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var error = Server.GetLastError();
+            var cryptoEx = error as CryptographicException;
+            if (cryptoEx != null)
+            {
+                FederatedAuthentication.WSFederationAuthenticationModule.SignOut();
+                Server.ClearError();
+            }
         }
     }
 }

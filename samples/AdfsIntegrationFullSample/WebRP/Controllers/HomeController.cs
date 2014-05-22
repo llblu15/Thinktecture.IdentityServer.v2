@@ -35,8 +35,9 @@ namespace WebRP.Controllers
 
         public ActionResult Login()
         {
-            var url = FederatedAuthentication.WSFederationAuthenticationModule.CreateSignInRequest(null, null, false).RequestUrl; ;
-            return Redirect(url);
+            var signin = FederatedAuthentication.WSFederationAuthenticationModule.CreateSignInRequest("56F018F26BE8486F89142D42938F7955", "https://marcschuric991f/rp-adfs/", false);
+
+            return Redirect(signin.RequestUrl);
         }
         
         public ActionResult Logout()
@@ -61,9 +62,9 @@ namespace WebRP.Controllers
 
         async Task<string> CallWebAPI(bool callTest2)
         {
-            var adfsIntegrationUrl = "https://idsrv.local/issue/adfs";
-            var webAPIId = "http://localhost/rp-adfs-webapi1";
-            var webAPIService = "https://localhost/rp-adfs-webapi/api/test1";
+            var adfsIntegrationUrl = "https://marcschuric991f/issue/adfs";
+            var webAPIId = "http://marcschuric991f/rp-adfs-webapi1";
+            var webAPIService = "https://marcschuric991f/rp-adfs-webapi/api/test1";
 
             // call adfs integration to convert saml to jwt for webapi RP
             var adfsProxy = new AdfsIntegrationProxy(adfsIntegrationUrl);
